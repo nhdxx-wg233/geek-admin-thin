@@ -10,15 +10,16 @@
       :row-style="{ height: '0' }"
       :cell-style="{ padding: '0px' }"
       :searchCol="{ xs: 1, sm: 2, md: 3, lg: 4, xl: 4 }"
+      row-key="id"
     >
       >
       <!-- 表格 header 按钮 -->
       <template #tableHeader>
-        <el-button type="primary" v-hasPermi="['sys:user:export']" :icon="Download" plain @click="downloadFile">导出</el-button>
+        <el-button type="primary" v-hasPermi="['sys:user:export']" :icon="Download" plain @click="downloadFile">导出 </el-button>
       </template>
       <!-- 表格操作 -->
       <template #operation="scope">
-        <el-button type="primary" link :icon="View" @click="openDrawer('编辑', scope.row)">编辑</el-button>
+        <el-button type="primary" link :icon="EditPen" @click="openDrawer('编辑', scope.row)" v-hasPermi="['sys:user:edit']">编辑 </el-button>
       </template>
     </ProTable>
     <UserDialog ref="dialogRef" />
@@ -26,13 +27,12 @@
 </template>
 
 <script setup lang="tsx" name="UserManager">
-import { ref, reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { ColumnProps } from '@/components/ProTable/interface'
 import ProTable from '@/components/ProTable/index.vue'
 import UserDialog from './components/UserDialog.vue'
 // import UserFriendDialog from './components/UserFriendDialog.vue'
-import { Download } from '@element-plus/icons-vue'
-import { View } from '@element-plus/icons-vue'
+import { Download, EditPen } from '@element-plus/icons-vue'
 import { UserApi } from '@/api/modules/user'
 import { ElMessageBox } from 'element-plus'
 import { useDownload } from '@/hooks/useDownload'
@@ -59,19 +59,6 @@ const getTableList = (params: any) => {
 
 // 表格配置项
 const columns: ColumnProps<UserType>[] = [
-  // { type: 'selection', fixed: 'left', width: 60 },
-  {
-    prop: 'avatar',
-    label: '头像',
-    width: 70,
-    render: (scope) => {
-      return (
-        <div class={['flex', 'justify-center', 'p-1']}>
-          <el-avatar shape={'square'} size={30} src={scope.row.avatar} />
-        </div>
-      )
-    }
-  },
   { prop: 'account', label: '账号', width: 120 },
   {
     prop: 'nickname',
@@ -79,8 +66,7 @@ const columns: ColumnProps<UserType>[] = [
     width: 100,
     search: { el: 'input' }
   },
-  { prop: 'phone', label: '手机号', search: { el: 'input' }, width: 120 },
-  { prop: 'company', label: '公司' },
+  { prop: 'mobile', label: '手机号', search: { el: 'input' }, width: 120 },
   {
     prop: 'gender',
     label: '性别',
@@ -103,34 +89,13 @@ const columns: ColumnProps<UserType>[] = [
     }
   },
   {
-    prop: 'isCertified',
-    label: '是否会员',
-    width: 100,
-    enum: [
-      {
-        certifiedLabel: '否',
-        certifiedValue: 0
-      },
-      {
-        certifiedLabel: '是',
-        certifiedValue: 1
-      }
-    ],
-    search: { el: 'select', props: { filterable: true } },
-    fieldNames: { label: 'certifiedLabel', value: 'certifiedValue' },
-    render: (scope) => {
-      let flag = useDate().compare(scope.row.endTime!)
-      return <el-tag type={flag ? 'success' : 'info'}>{flag ? '是' : '否'}</el-tag>
-    }
+    prop: 'profession',
+    label: '职业',
+    width: 100
   },
   {
-    prop: 'endTime',
-    label: '会员到期时间',
-    width: 200
-  },
-  {
-    prop: 'createTime',
-    label: '创建时间',
+    prop: 'birthday',
+    label: '生日',
     width: 200
   },
   { prop: 'operation', label: '操作', fixed: 'right', width: 340 }

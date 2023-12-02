@@ -3,14 +3,14 @@
     <ProTable ref="proTable" title="管理员列表" :columns="columns" :requestApi="getTableList" :initParam="initParam" :dataCallback="dataCallback">
       <!-- 表格 header 按钮 -->
       <template #tableHeader>
-        <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')" v-hasPermi="['sys:manager:add']">新增管理员</el-button>
+        <el-button type="primary" :icon="CirclePlus" @click="openDrawer('新增')" v-hasPermi="['sys:manager:add']"> 新增管理员 </el-button>
       </template>
       <!-- 表格操作 -->
       <template #operation="scope">
-        <el-button type="primary" link :icon="View" @click="openDrawer('查看', scope.row)" v-hasPermi="['sys:manager:view']">查看</el-button>
-        <el-button type="primary" link :icon="EditPen" @click="openDrawer('编辑', scope.row)" v-hasPermi="['sys:manager:edit']">编辑</el-button>
-        <el-button type="warning" link :icon="EditPen" @click="openDrawer('重置', scope.row)" v-hasPermi="['sys:manager:reset-psw']">重置密码</el-button>
-        <el-button type="danger" link :icon="Delete" @click="deleteAccount(scope.row)" v-hasPermi="['sys:manager:remove']">删除</el-button>
+        <el-button type="primary" link :icon="View" @click="openDrawer('查看', scope.row)" v-hasPermi="['sys:manager:view']">查看 </el-button>
+        <el-button type="primary" link :icon="EditPen" @click="openDrawer('编辑', scope.row)" v-hasPermi="['sys:manager:edit']">编辑 </el-button>
+        <el-button type="warning" link :icon="EditPen" @click="openDrawer('重置', scope.row)" v-hasPermi="['sys:manager:reset-psw']">重置密码 </el-button>
+        <el-button type="danger" link :icon="Delete" @click="deleteAccount(scope.row)" v-hasPermi="['sys:manager:remove']">删除 </el-button>
       </template>
     </ProTable>
     <ManagerDialog ref="dialogRef" />
@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="tsx" name="SysManager">
-import { ref, reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { SysManager } from '@/api/interface'
 import { ColumnProps } from '@/components/ProTable/interface'
 import { useHandleData } from '@/hooks/useHandleData'
@@ -26,7 +26,7 @@ import { useAuthButtons } from '@/hooks/useAuthButtons'
 import ProTable from '@/components/ProTable/index.vue'
 import ManagerDialog from '@/views/System/components/ManagerDialog.vue'
 import { CirclePlus, Delete, EditPen, View } from '@element-plus/icons-vue'
-import { getManagerPage, addManager, editManager, deleteManager } from '@/api/modules/manager'
+import { addManager, deleteManager, editManager, getManagerPage } from '@/api/modules/manager'
 import { getRoleList } from '@/api/modules/role'
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref()

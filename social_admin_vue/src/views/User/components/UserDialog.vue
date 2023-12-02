@@ -16,20 +16,8 @@
         <el-form-item label="用户名" prop="nickname">
           <el-input v-model="dialogProps.row!.nickname" placeholder="" clearable :disabled="dialogProps.title == '充值'"></el-input>
         </el-form-item>
-        <el-form-item label="用户头像" prop="avatar">
-          <UploadImg v-model:image-url="dialogProps.row!.avatar" width="135px" height="135px" :file-size="5" :disabled="dialogProps.title == '充值'">
-            <template #empty>
-              <el-icon><Avatar /></el-icon>
-              <span>请上传头像</span>
-            </template>
-            <template #tip> 头像大小不能超过 5M </template>
-          </UploadImg>
-        </el-form-item>
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="dialogProps.row!.phone" placeholder="" clearable :disabled="dialogProps.title == '充值'"></el-input>
-        </el-form-item>
-        <el-form-item label="公司" prop="company">
-          <el-input v-model="dialogProps.row!.company" placeholder="" clearable :disabled="dialogProps.title == '充值'"></el-input>
         </el-form-item>
         <el-form-item label="性别" prop="gender">
           <el-radio-group v-model="dialogProps.row!.gender" :disabled="dialogProps.title == '充值'">
@@ -37,10 +25,11 @@
             <el-radio :label="1" border>女</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item v-if="dialogProps.title == '充值'" label="卡包" prop="cardId">
-          <el-select v-model="dialogProps.row.cardId" filterable placeholder="请选择卡包" class="w-full">
-            <el-option v-for="item in dialogProps.cardbagList" :key="item.pkId" :label="item.name" :value="item.pkId" class="isabel-option" />
-          </el-select>
+        <el-form-item label="职业" prop="profession">
+          <el-input v-model="dialogProps.row!.profession" placeholder="" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="生日" prop="birthday">
+          <el-date-picker v-model="dialogProps.row!.birthday" type="Date" placeholder="选择日期" clearable></el-date-picker>
         </el-form-item>
       </el-form>
     </div>
@@ -98,7 +87,8 @@ const getCardbagList = async () => {
 await getCardbagList()
 
 const rules = reactive({
-  cardId: [{ required: true, message: '请选择卡包', trigger: 'blur' }]
+  cardId: [{ required: true, message: '请选择卡包', trigger: 'blur' }],
+  nickname: [{ required: true, message: '请输入用户名', trigger: 'blur' }]
 })
 const ruleFormRef = ref<FormInstance>()
 const handleSubmit = () => {
